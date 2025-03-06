@@ -12,11 +12,15 @@
     "caption": "jazz group."
   },
   {
-    "path": "park.jpg",
-    "caption": "A park with a lake."
+    "path": "write.jpg",
+    "caption": "writing in group"
   },
   {
-    "path": "women-coding.jpg",
-    "caption": "A group of women coding."
+    "path": "OutdoorMovie.jpg",
+    "caption": "a outdoor movie."
+  },
+  {
+    "path": "OutdoorPhotography.jpg",
+    "caption": "a outdoor photograpy."
   }
 ]

@@ -43,7 +43,7 @@ app.get('/events', async (req, res) => {
       title: event.title,
       image: event.image,
       date: event.date,
-      location: event.location,
+      price: event.price,
     })),
   });
 });
@@ -85,6 +85,8 @@ app.post('/events', async (req, res) => {
 
   if (
     !event.title?.trim() ||
+    !event.price?.trim() ||
+    !event.entries?.trim() ||
     !event.description?.trim() ||
     !event.date?.trim() ||
     !event.time?.trim() ||
@@ -123,7 +125,10 @@ app.put('/events/:id', async (req, res) => {
     !event.date?.trim() ||
     !event.time?.trim() ||
     !event.image?.trim() ||
-    !event.location?.trim()
+    !event.location?.trim() ||
+    !event.entries?.trim() ||
+    !event.price?.trim()
+
   ) {
     return res.status(400).json({ message: 'Invalid data provided.' });
   }

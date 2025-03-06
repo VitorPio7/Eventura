@@ -34,13 +34,13 @@
   },
   {
     "id": "e4",
-    "title": "Writing Workshop",
+    "title": "Live Jazz Night",
     "image": "jazz.jpg",
-    "description": "Unleash your inner writer! Join our workshop to learn tips, techniques, and inspiration to craft compelling stories. Perfect for beginners and seasoned writers alike.",
+    "description": "mmerse yourself in the smooth sounds of live jazz performed by talented local artists. A cozy, intimate evening filled with soulful melodies and great vibes.",
     "date": "2025-05-07",
-    "price":25,
-    "time": "23:00",
-    "entries":70,
+    "price":80,
+    "time": "22:00",
+    "entries":60,
     "location": "Tech Training Academy, Sao Paulo, SP"
   },
   {
