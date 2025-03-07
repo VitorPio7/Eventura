@@ -8,7 +8,7 @@ export default function Home(){
         <div className={Style.divText}>
             <h1>Organize share and see events in your concert hall</h1>
             <p>Organize concerts, workshops, and meetups. share your next adventure, connect with communities, and never miss out on local happenings!</p>
-            <Link to={Style}><button className={Style.myButton}>See Events</button></Link>
+            <Link to="/events"><button className={Style.myButton}>See Events</button></Link>
         </div>
     </main>
 }

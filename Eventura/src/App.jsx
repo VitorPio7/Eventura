@@ -1,6 +1,7 @@
 import {createBrowserRouter, RouterProvider} from "react-router";
 import Home from "./pages/Home";
 import Root from './pages/Root';
+import About from "./pages/About";
 const roter = createBrowserRouter([
   {
     path:'/',
@@ -9,6 +10,10 @@ const roter = createBrowserRouter([
       {
         index:true,
         element:<Home/>
+      },
+      {
+        path:'about',
+        element:<About/>
       }
     ]
   }

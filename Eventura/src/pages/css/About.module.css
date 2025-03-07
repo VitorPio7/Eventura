@@ -1,0 +1,49 @@
+.playVideo{
+    object-fit: cover;
+    width: 100vw;
+    height: 250px;
+    top: 0;
+    left: 30;
+    z-index: -1;
+    filter: brightness(90%);
+    filter: grayscale(70%);;
+}
+.info h1{
+    font-size: 28px;
+    padding: 16px;
+}
+.info p{
+    font-size: 14px;
+    padding: 16px;
+    font-weight: 300;
+}
+.box{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px;
+    width: 300px;
+    height: 130px;
+    background-color:#FFA9A3;
+    border-radius: 5px;
+}
+.box button{
+    width: 170px;
+    height: 45px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    font-weight: 600;
+    background-color: black;
+    cursor: pointer;
+}
+.box h1{
+    font-size: 20px;
+}
+.mainBoxdiv{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+    margin-bottom: 100px;
+}
