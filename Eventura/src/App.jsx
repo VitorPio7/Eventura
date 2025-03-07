@@ -1,12 +1,13 @@
-import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import {createBrowserRouter, RouterProvider} from "react-router";
 import Home from "./pages/Home";
+import Root from './pages/Root';
 const roter = createBrowserRouter([
   {
     path:'/',
-    element:<Home/>,
+    element:<Root/>,
     children:[
       {
-        path:index,
+        index:true,
         element:<Home/>
       }
     ]
@@ -16,9 +17,7 @@ const roter = createBrowserRouter([
 function App() {
   return (
     <>
-      <div className="App">
-        <h1>Hello World</h1>
-      </div>
+      <RouterProvider router={roter}/>
     </>
   )
 }
