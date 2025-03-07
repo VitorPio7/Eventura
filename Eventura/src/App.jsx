@@ -1,3 +1,18 @@
+import {createBrowserRouter, RouterProvider} from "react-router-dom";
+import Home from "./pages/Home";
+const roter = createBrowserRouter([
+  {
+    path:'/',
+    element:<Home/>,
+    children:[
+      {
+        path:index,
+        element:<Home/>
+      }
+    ]
+  }
+])
+
 function App() {
   return (
     <>
