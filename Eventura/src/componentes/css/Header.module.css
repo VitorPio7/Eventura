@@ -1,8 +1,18 @@
+*{
+    margin: 0px;
+}
 .allNav{
     display: flex;
     flex-direction: row;
+    height: 100px;
     align-items: center;
     justify-content: space-between;
+    background-color:#FFF7ED;
+    padding: 15px;
+}
+.allNav h1{
+    font-size: 25px;
+    font-weight: 800;
 }
 .mynav{
     display: flex;
@@ -10,4 +20,19 @@
     gap: 10px;
     align-items: center;
     justify-content: end;
+}
+.mynav a{
+    text-decoration: none;
+    color:#4D4D4D;
+    font-weight: 300;
+    font-size: 13px; 
+    cursor: pointer;
+}
+.mynav a:hover{
+    color:#161616;
+    font-weight: 700;
+}
+.active{
+    color:#161616;
+    font-weight: 700;
 }

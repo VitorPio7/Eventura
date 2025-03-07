@@ -4,10 +4,18 @@ export default function Header(){
     return <nav className={classes.allNav}>
         <h1>Eventura</h1>
         <nav className={classes.mynav}>
-            <NavLink to="/"> Home</NavLink>
-            <NavLink to="/about">About</NavLink>
-            <NavLink to="/add">Add</NavLink>
-            <NavLink to="/events">Events</NavLink>
+            <NavLink  className={({isActive})=>{
+                return isActive ? classes.active : undefined
+            }}  to="/"> Home</NavLink>
+            <NavLink className={({isActive})=>{
+                return isActive ? classes.active : undefined
+            }}  to="/about" >About</NavLink>
+            <NavLink className={({isActive})=>{
+                return isActive ? classes.active : undefined
+            }} to="/add">Add</NavLink>
+            <NavLink className={({isActive})=>{
+                return isActive ? classes.active : undefined
+            }} to="/events">Events</NavLink>
             <img src="icon.png" alt="userIcon" />
         </nav>
     </nav>
