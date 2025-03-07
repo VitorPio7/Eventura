@@ -1,0 +1,37 @@
+.playVideo{
+    object-fit: cover;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 30;
+    z-index: -1;
+    filter: brightness(80%);
+    filter: grayscale(70%);;
+}
+.divText{
+    color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-self:center;
+    margin-top: 50px;
+}
+.divText h1{
+    font-size: 36px;
+    padding: 14px;
+    font-weight: bold;
+}
+.divText p{
+    padding: 14px;
+    font-weight: 300;
+}
+.myButton{
+    background-color: #F87575;
+    color: white;
+    border: none;
+    width: 360px;
+    height: 50px;
+    border-radius: 5px;
+    cursor: pointer;
+}
