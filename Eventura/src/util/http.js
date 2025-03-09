@@ -6,6 +6,8 @@ export async function fetchEvents({ signal, search }) {
     if (search) {
         url += "?search=" + search;
     }
+    console.log("Fetching URL:", url);
+
     let response = await fetch(url, { signal });
     if (!response.ok) {
         let error = new Error("Error fetching events");
@@ -13,6 +15,12 @@ export async function fetchEvents({ signal, search }) {
         error.info = await response.json();
         throw error;
     }
-    const { events } = await response.json();
-    return events;
+    const data = await response.json();
+    if (data.event) {
+        return data;
+    } else if (data.events) {
+        return data.events;
+    } else {
+        return [];
+    }
 }

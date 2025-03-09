@@ -27,10 +27,13 @@ app.get('/events', async (req, res) => {
   let events = JSON.parse(eventsFileContent);
 
   if (search) {
-    events = events.filter((event) => {
-      const searchableText = `${event.title} ${event.description} ${event.location}`;
-      return searchableText.toLowerCase().includes(search.toLowerCase());
+    const event = events.find((event) => {
+      return event.title.toLowerCase().includes(search.toLowerCase());
     });
+    if (event) {
+      return res.json({ event })
+    }
+    return res.json({ events: [] });
   }
 
   if (max) {
