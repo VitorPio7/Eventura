@@ -27,7 +27,7 @@ app.get('/events', async (req, res) => {
   let events = JSON.parse(eventsFileContent);
 
   if (search) {
-    const event = events.find((event) => {
+    const event = events.filter((event) => {
       return event.title.toLowerCase().includes(search.toLowerCase());
     });
     if (event) {
