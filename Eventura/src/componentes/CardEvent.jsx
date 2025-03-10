@@ -1,7 +1,7 @@
 import Style from "./css/CardEvent.module.css"
-export default function CardEvent({img,title,date,price,desc}){
+export default function CardEvent({image,title,date,price,desc}){
     return <div className={Style.mainDiv}>
-        <img src={img} alt={desc} />
+        <img width="100px" height="100px" src={`http://localhost:3000/${image}`}  alt={desc} />
         <h3>{title}</h3>
         <div>
         <p>${price}</p>

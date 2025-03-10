@@ -7,6 +7,7 @@ import SearchBar from "../componentes/SearchBar";
 export default function Events() {
     const searElement = useRef();
     const [search, setSearch] = useState();
+    const [seeAll,setSeeAll] = useState(false);
     const { data, error, isLoading, isError } = useQuery({
         queryKey: ["events", { search: search }],
         queryFn: ({ signal }) => fetchEvents({ signal, search }),
@@ -18,6 +19,7 @@ export default function Events() {
     
     function onSubmit(event) {
         event.preventDefault();
+        setSeeAll(false);
         setSearch(searElement.current.value);
     }
     const allData = useQuery({
@@ -25,7 +27,8 @@ export default function Events() {
         queryFn: ({signal})=>fetchEvents({signal}),
     }
     )
-    let content = <p>please enter a search term and to find events</p>
+    let content = <p>please enter a search term to find events
+        <button style={{"border":"none","backgroundColor":"transparent","color":"#F87575"}} onClick={()=>setSeeAll(true)} >See all</button></p>
     if(data && data.event){
         content = data.event.map((el)=><CardEvent key={el.id} {...el} /> )
         if(data.event.length === 0){
@@ -34,6 +37,9 @@ export default function Events() {
             {allData.data.map((el)=><CardEvent key={el.id} {...el} />)}</> 
               
         }  
+    }
+    if(allData.data && seeAll){
+        content = allData.data.map((el)=><CardEvent key={el.id} {...el} />)
     }
     return <main>
         <h1 className={Style.title}>Explore your events</h1>
