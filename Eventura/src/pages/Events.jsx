@@ -45,7 +45,11 @@ export default function Events() {
         <h1 className={Style.title}>Explore your events</h1>
          <SearchBar sendElement={searElement} onSubmit={onSubmit} />
         {isLoading && <p>Loading events...</p>}
-        {isError && <p>Error loading events: {error.message}</p>}
+        {isError && <p>Error loading events: {error.message}</p>}           
+        
+        <div className={Style.content}>
          {content}      
+         </div>
+        
      </main>
 }
