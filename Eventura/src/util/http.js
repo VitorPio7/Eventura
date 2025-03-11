@@ -24,3 +24,14 @@ export async function fetchEvents({ signal, search }) {
         return [];
     }
 }
+export async function fetchById({ id, signal }) {
+    let url = "http://localhost:3000/events/" + id;
+    let response = await fetch(url, { signal });
+    if (!response.ok) {
+        let error = new Error("Error fetching this event");
+        error.code = response.status;
+        error.info = await response.json();
+    }
+    const { event } = await response.json();
+    return event;
+}
