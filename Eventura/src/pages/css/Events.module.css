@@ -1,12 +1,16 @@
 .title{
     font-size: 25px;
 }
-main{
-    padding: 12px;
-}
+
 .content{
     display: grid;
     grid-template-columns: 1fr 1fr;
     margin-bottom: 100px;
     gap: 8px;
+}
+.mainClass{
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   margin-top: 15px;
 }

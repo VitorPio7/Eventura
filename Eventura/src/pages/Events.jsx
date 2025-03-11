@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { fetchEvents } from "../util/http";
 import CardEvent from "../componentes/CardEvent";
 import SearchBar from "../componentes/SearchBar";
+import SeeAll from "../componentes/SeeAll";
 export default function Events() {
     const searElement = useRef();
     const [search, setSearch] = useState();
@@ -27,8 +28,7 @@ export default function Events() {
         queryFn: ({signal})=>fetchEvents({signal}),
     }
     )
-    let content = <p>please enter a search term to find events
-        <button style={{"border":"none","backgroundColor":"transparent","color":"#F87575"}} onClick={()=>setSeeAll(true)} >See all</button></p>
+    let content =""
     if(data && data.event){
         content = data.event.map((el)=><CardEvent key={el.id} {...el} /> )
         if(data.event.length === 0){
@@ -41,12 +41,12 @@ export default function Events() {
     if(allData.data && seeAll){
         content = allData.data.map((el)=><CardEvent key={el.id} {...el} />)
     }
-    return <main>
+    return <main  className={Style.mainClass}>
         <h1 className={Style.title}>Explore your events</h1>
          <SearchBar sendElement={searElement} onSubmit={onSubmit} />
         {isLoading && <p>Loading events...</p>}
         {isError && <p>Error loading events: {error.message}</p>}           
-        
+        {!seeAll && <SeeAll text="please enter a search term to find events" event={()=>setSeeAll(true)}/>}
         <div className={Style.content}>
          {content}      
          </div>

@@ -1,5 +1,7 @@
-import Style from './css/About.module.css'
+import Style from './css/About.module.css';
+import {useNavigate} from 'react-router';
 export default function About(){
+    let navigate = useNavigate();
     return <main>
         <div>
             <video className={Style.playVideo} loop muted autoPlay> 
@@ -13,7 +15,7 @@ export default function About(){
         <div className={Style.mainBoxdiv}>
             <div className={Style.box}>
                 <h1>Explore, connect, and enjoy, your next adventure starts here!</h1>
-                <button>Explore your events</button>
+                <button onClick={()=>navigate('/events')}>Explore your events</button>
             </div>
         </div>
     </main>
