@@ -1,5 +1,7 @@
-import Style from "./css/CardEvent.module.css"
-export default function CardEvent({image,title,date,price,desc}){
+import Style from "./css/CardEvent.module.css";
+import { useNavigate } from "react-router";
+export default function CardEvent({image,title,date,price,desc,id}){
+    let navigate = useNavigate();
     const formattedDate = new Date(date).toLocaleDateString("en-US", {
         year: "2-digit",
         month: "short",
@@ -14,6 +16,6 @@ export default function CardEvent({image,title,date,price,desc}){
           <p>{formattedDate}</p>
         </div>
         </div>
-        <button>See more</button>
+        <button onClick={()=>navigate(`${id}`)} >See more</button>
     </div>
 }

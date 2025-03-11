@@ -1,0 +1,84 @@
+.main{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 15px;
+    
+}
+.mainDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: start;
+}
+.mainImage{
+    width: 400px;
+    height:517px ;
+    border-radius: 5px;
+    object-fit: cover;
+    margin-bottom: 24px ;
+}
+.info{
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.date{
+    font-size: 11px;
+    font-weight:  300;
+}
+.time{
+    font-size: 11px;
+    font-weight:  300;
+}
+.location{
+    font-size: 11px;
+    font-weight:  300;
+}
+.price{
+    font-weight: 700;
+    font-size: 30px;
+}
+.desc{
+    max-width: 350px;
+    font-size: 14px;
+}
+.entries{
+    margin-top: 14px;
+    font-weight: 700;
+}
+.divButton{
+    display: flex;
+    margin-top: 14px;
+    justify-items: start;
+    align-items: start;
+    gap: 22px;
+    margin-bottom: 125px;
+    margin-left: 5px;
+
+}
+.edit{
+    width: 187px;
+    height: 50px;
+    border-radius: 5px;
+    border-color: transparent;
+    background-color: #F87575;
+    color: white;
+    cursor: pointer;
+}
+.delete{
+    width: 187px;
+    height: 50px;
+    border-radius: 5px;
+    border-color: transparent;
+    background-color: #686D76;
+    color: white;
+    cursor: pointer;
+}
+.return{
+    color: black;
+    cursor: pointer;
+    font-size: 16px;
+}
