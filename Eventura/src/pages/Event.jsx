@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
-import { useQuery } from "@tanstack/react-query";
-import {fetchById} from "../util/http";
+import { useQuery,useMutation } from "@tanstack/react-query";
+import {fetchById,updateEvent,query } from "../util/http";
 import { BiArrowBack } from "react-icons/bi";
 import { NavLink } from "react-router";
 import { useState } from "react";
@@ -14,7 +14,23 @@ export default function Event(){
      queryKey:["events",id],
      queryFn:({signal})=>fetchById({id,signal})
    })
-   console.log(openModalEdit)
+   let mutation = useMutation({
+     mutationFn:updateEvent,
+     onMutate: async(data)=>{
+      const newEvent = data.event;
+      await query.cancelQueries({queryKey:["events",id]});
+      const previousEvent = query.getQueryData(["events",id]);
+      query.setQueryData(['events',id],newEvent);
+      return {previousEvent}
+    },
+    onError:(error,data,context)=>{
+      query.setQueryData(['events',id],context.previousEvent);
+     },
+     onSettled:()=>{
+      query.invalidateQueries({queryKey:["events",id]});
+     }
+   })
+   console.log(openModalEdit);
    const formattedDate = new Date(data?.date).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
@@ -24,12 +40,8 @@ export default function Event(){
     function handleChangeModal(){
       setOpenModalEdit(prevValue=>!prevValue)
     }
-    function handleEditdata(evt){
-     evt.preventDefault();
-     let formData = new FormData(evt.target);
-     const data = Object.fromEntries(formData);
-     console.log(data)
-     setOpenModalEdit(false);
+    function handleEditdata(formData){
+      mutation.mutate({id:id,event:formData});
     }
     let modal;
     if(openModalEdit){
