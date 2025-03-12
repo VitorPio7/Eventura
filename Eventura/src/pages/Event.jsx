@@ -24,9 +24,18 @@ export default function Event(){
     function handleChangeModal(){
       setOpenModalEdit(prevValue=>!prevValue)
     }
+    function handleEditdata(evt){
+     evt.preventDefault();
+     let formData = new FormData(evt.target);
+     const data = Object.fromEntries(formData);
+     console.log(data)
+     setOpenModalEdit(false);
+    }
     let modal;
     if(openModalEdit){
-      modal = <Modal handleChangeModal={handleChangeModal} typeText="Edit"><Form/></Modal>
+      modal = <Modal handleChangeModal={handleChangeModal} typeText="Edit">
+              <Form handleSubmit={handleEditdata} data={data} typeText="Edit"/>
+              </Modal>
     }
     return <> 
    <main className={Style.main}> 
