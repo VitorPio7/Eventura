@@ -5,7 +5,8 @@ import { BiArrowBack } from "react-icons/bi";
 import { NavLink } from "react-router";
 import { useState } from "react";
 import Style from "./css/Event.module.css"
-import Modal from "./Modal/Modal"
+import Modal from "./Modal/Modal";
+import Form from "../componentes/Form"
 export default function Event(){
    let {id} = useParams();
    let [openModalEdit,setOpenModalEdit] = useState(false);
@@ -13,6 +14,7 @@ export default function Event(){
      queryKey:["events",id],
      queryFn:({signal})=>fetchById({id,signal})
    })
+   console.log(openModalEdit)
    const formattedDate = new Date(data?.date).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
@@ -24,7 +26,7 @@ export default function Event(){
     }
     let modal;
     if(openModalEdit){
-      modal = <Modal onClose={handleChangeModal} typeText="Edit"/>
+      modal = <Modal handleChangeModal={handleChangeModal} typeText="Edit"><Form/></Modal>
     }
     return <> 
    <main className={Style.main}> 
