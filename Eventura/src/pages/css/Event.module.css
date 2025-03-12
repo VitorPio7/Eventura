@@ -4,7 +4,9 @@
     align-items: center;
     justify-content: center;
     margin-top: 15px;
-    
+}
+body{
+    background-color:#FFF7ED
 }
 .mainDiv{
     display: flex;
@@ -81,4 +83,8 @@
     color: black;
     cursor: pointer;
     font-size: 16px;
+    align-self: start;
+    margin-left: 5px;
+    margin-bottom: 20px;
+    margin-top: 10px;
 }

@@ -3,9 +3,12 @@ import { useQuery } from "@tanstack/react-query";
 import {fetchById} from "../util/http";
 import { BiArrowBack } from "react-icons/bi";
 import { NavLink } from "react-router";
+import { useState } from "react";
 import Style from "./css/Event.module.css"
+import Modal from "./Modal/Modal"
 export default function Event(){
-    let {id} = useParams();
+   let {id} = useParams();
+   let [openModalEdit,setOpenModalEdit] = useState(false);
    let {data,isPending,isError,error} = useQuery({
      queryKey:["events",id],
      queryFn:({signal})=>fetchById({id,signal})
@@ -16,9 +19,16 @@ export default function Event(){
     day: "numeric",
   });
   const currency =  new Intl.NumberFormat("en-US", {style:"currency",currency:"usd",maximumSignificantDigits:3}).format(data?.price);
+    function handleChangeModal(){
+      setOpenModalEdit(prevValue=>!prevValue)
+    }
+    let modal;
+    if(openModalEdit){
+      modal = <Modal onClose={handleChangeModal} typeText="Edit"/>
+    }
     return <> 
-    
-    <main className={Style.main}>    
+   <main className={Style.main}> 
+        {modal}
         <NavLink to="/events" className={Style.return}><BiArrowBack/> Back to all events</NavLink>
         <div className={Style.mainDiv}>
         <img src={`http://localhost:3000/${data?.image}`} className={Style.mainImage} alt="image"  />
@@ -34,7 +44,7 @@ export default function Event(){
         </div>
     </main>
     <div className={Style.divButton}>
-            <button className={Style.edit}>Edit</button>
+            <button className={Style.edit} onClick={handleChangeModal} >Edit</button>
             <button className={Style.delete}>Delete</button>
     </div>
     </>
