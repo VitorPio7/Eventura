@@ -36,6 +36,8 @@ export async function fetchById({ id, signal }) {
     return event;
 }
 export async function updateEvent({ id, event }) {
+    console.log("Enviando para o backend:", { id, event });
+
     let url = "http://localhost:3000/events/" + id;
     let response = await fetch(url, {
         method: "PUT",
@@ -43,12 +45,16 @@ export async function updateEvent({ id, event }) {
         headers: {
             "Content-Type": "application/json"
         }
-    })
+    });
+
     if (!response.ok) {
-        const error = new Error("An error occured while updating the event");
+        const errorData = await response.json();
+        console.error("Erro na resposta:", errorData);
+        const error = new Error("An error occurred while updating the event");
         error.code = response.status;
-        error.info = await response.json();
+        error.info = errorData;
         throw error;
     }
+
     return response.json();
 }

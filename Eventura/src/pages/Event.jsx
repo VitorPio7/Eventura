@@ -27,7 +27,7 @@ export default function Event(){
       query.setQueryData(['events',id],context.previousEvent);
      },
      onSettled:()=>{
-      query.invalidateQueries({queryKey:["events",id]});
+      query.invalidateQueries(["events",id]);
      }
    })
    console.log(openModalEdit);
@@ -42,6 +42,7 @@ export default function Event(){
     }
     function handleEditdata(formData){
       mutation.mutate({id:id,event:formData});
+      setOpenModalEdit(false);
     }
     let modal;
     if(openModalEdit){

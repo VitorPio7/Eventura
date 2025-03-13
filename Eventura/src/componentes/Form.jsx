@@ -1,5 +1,21 @@
 export default function Form({handleSubmit,typeText,data}) {
-    return   <form onSubmit={handleSubmit}>
+    function onSubmit(event){
+        event.preventDefault();
+        let formData = new FormData(event.target);
+        console.log(formData.get("date"))
+        const eventData = {
+            title:formData.get("name"),
+            date:formData.get("date"),
+            time:formData.get("time"),
+            location:formData.get("place"),
+            price:formData.get("price").toString(),
+            entries:formData.get("entries").toString(),
+            description:formData.get("description"),
+            image:formData.get("image")||''
+        };
+        handleSubmit(eventData);
+    }
+    return <form onSubmit={onSubmit}>
     <label htmlFor="name">name</label>
             <input type="text" name="name" defaultValue={data?.title??''} required/>
            <label htmlFor="date" >Date</label>
@@ -12,6 +28,8 @@ export default function Form({handleSubmit,typeText,data}) {
             <input type="number" name="price"  defaultValue={data?.price??''} required/>
             <label htmlFor="entries" >Entries</label>
             <input type="number" name="entries" defaultValue={data?.entries??''} required/>    
+            <label htmlFor="image" >Image</label>
+            <input type="text" name="image" defaultValue={data?.image??''} required/>    
             <label htmlFor="description">Description</label>
             <textarea name="description" required defaultValue={data?.description??''} ></textarea> 
             <button>{typeText}</button> 
