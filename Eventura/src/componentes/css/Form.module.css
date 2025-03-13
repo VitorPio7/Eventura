@@ -1,0 +1,21 @@
+.formDiv input{
+    height: 25px;
+    border-radius: 8px;
+    border-color:#D5D7DA ;
+    border-style: solid;
+    border-width: 1px;
+    padding: 7px;
+}
+.formDiv textarea{
+    height: 122px;
+    border-color:#D5D7DA ;
+    border-radius: 8px;
+    padding: 7px;
+}
+.formDiv button{
+    height: 40px;
+    border-radius: 8px;
+    border-color: transparent;
+    background-color: #F87575;
+    color: white;
+}

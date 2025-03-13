@@ -15,7 +15,7 @@ export default function Modal({typeText, handleChangeModal,children}){
         <dialog className={Style.modal} ref={dialog} onClose={handleChangeModal} >
             {typeText}   
             {children}  
-        <button onClick={handleChangeModal}>Cancel</button>   
+        <button className={Style.cancel} onClick={handleChangeModal}>Cancel</button>   
         </dialog>,
         document.getElementsByTagName("body")[0]
     )

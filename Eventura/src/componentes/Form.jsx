@@ -1,3 +1,4 @@
+import Style from "../componentes/css/Form.module.css"
 export default function Form({handleSubmit,typeText,data}) {
     function onSubmit(event){
         event.preventDefault();
@@ -15,8 +16,8 @@ export default function Form({handleSubmit,typeText,data}) {
         };
         handleSubmit(eventData);
     }
-    return <form onSubmit={onSubmit}>
-    <label htmlFor="name">name</label>
+    return <form className={Style.formDiv} onSubmit={onSubmit}>
+    <label htmlFor="name">Title</label>
             <input type="text" name="name" defaultValue={data?.title??''} required/>
            <label htmlFor="date" >Date</label>
             <input type="date" name="date" defaultValue={data?.date??''} required/>
