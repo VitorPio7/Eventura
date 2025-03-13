@@ -48,8 +48,8 @@ export default function Event(){
     let modal;
     if(openModalEdit){
       modal = <Modal handleChangeModal={handleChangeModal} typeText="Edit">
-              <Form handleSubmit={handleEditdata} data={data} typeText="Edit"/>
-              </Modal>
+             <Form handleSubmit={handleEditdata} data={data} typeText="Edit"/> 
+             </Modal>
     }
     return <> 
    <main className={Style.main}> 

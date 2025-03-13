@@ -1,5 +1,5 @@
 import Style from "../componentes/css/Form.module.css"
-export default function Form({handleSubmit,typeText,data}) {
+export default function Form({handleSubmit,typeText,data,}) {
     function onSubmit(event){
         event.preventDefault();
         let formData = new FormData(event.target);
@@ -33,6 +33,6 @@ export default function Form({handleSubmit,typeText,data}) {
             <input type="text" name="image" defaultValue={data?.image??''} required/>    
             <label htmlFor="description">Description</label>
             <textarea name="description" required defaultValue={data?.description??''} ></textarea> 
-            <button>{typeText}</button> 
+            <button > {typeText}</button> 
         </form>
 }
