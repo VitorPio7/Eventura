@@ -6,7 +6,8 @@ import { NavLink } from "react-router";
 import { useState } from "react";
 import Style from "./css/Event.module.css"
 import Modal from "./Modal/Modal";
-import Form from "../componentes/Form"
+import Form from "../componentes/Form";
+import SpinnerLoader from "../componentes/SpinnerLoader"
 export default function Event(){
    let {id} = useParams();
    let [openModalEdit,setOpenModalEdit] = useState(false);
@@ -30,7 +31,7 @@ export default function Event(){
       query.invalidateQueries(["events",id]);
      }
    })
-   console.log(openModalEdit);
+ 
    const formattedDate = new Date(data?.date).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
@@ -53,6 +54,7 @@ export default function Event(){
     return <> 
    <main className={Style.main}> 
         {modal}
+        {mutation.isPending && <SpinnerLoader/>}
         <NavLink to="/events" className={Style.return}><BiArrowBack/> Back to all events</NavLink>
         <div className={Style.mainDiv}>
         <img src={`http://localhost:3000/${data?.image}`} className={Style.mainImage} alt="image"  />
