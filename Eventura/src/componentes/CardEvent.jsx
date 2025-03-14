@@ -1,5 +1,6 @@
 import Style from "./css/CardEvent.module.css";
 import { useNavigate } from "react-router";
+import { LazyLoadImage } from "react-lazy-load-image-component";
 export default function CardEvent({image,title,date,price,desc,id}){
     let navigate = useNavigate();
     const formattedDate = new Date(date).toLocaleDateString("en-US", {
@@ -8,7 +9,7 @@ export default function CardEvent({image,title,date,price,desc,id}){
         day: "numeric",
       });
     return <div className={Style.mainDiv}>
-         <img  src={`http://localhost:3000/${image}`}  alt={desc} />
+         <LazyLoadImage  src={`http://localhost:3000/${image}`}  alt={desc} />
          <div className={Style.info}>
          <h3>{title}</h3>
         <div className={Style.dataAndPrice}>

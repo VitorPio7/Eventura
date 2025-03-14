@@ -3,30 +3,27 @@ import { useQuery,useMutation, useQueryClient } from "@tanstack/react-query";
 import {fetchById,updateEvent } from "../util/http";
 import { BiArrowBack } from "react-icons/bi";
 import { NavLink } from "react-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Style from "./css/Event.module.css"
 import Modal from "./Modal/Modal";
 import Form from "../componentes/Form";
-
+import SpinnerLoader from "../componentes/SpinnerLoader";
+import { LazyLoadImage } from "react-lazy-load-image-component";
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 
 export default function Event(){
   const queryClient = useQueryClient();
    let {id} = useParams();
    let [openModalEdit,setOpenModalEdit] = useState(false);
-   let [updatedSuccess,setUpdateSuccess] = useState(false);
+  
 
-   useEffect(()=>{
-    if(updatedSuccess){
-      alert("Event updated");
-      setUpdateSuccess(false);
-    }
-   },[openModalEdit]);
-
+   console.log(openModalEdit)
    let {data,isPending,isError,error} = useQuery({
      queryKey:["events",id],
      queryFn:({signal})=>fetchById({id,signal})
    })
+
    let mutation = useMutation({
      mutationFn:updateEvent,
      onMutate: async(data)=>{
@@ -38,6 +35,7 @@ export default function Event(){
         ...data.event
       }});
       return {previousEvent};
+      
     },
     onError:(error,data,context)=>{
       queryClient.setQueryData(['events',id],context.previousEvent);
@@ -45,11 +43,6 @@ export default function Event(){
      onSettled:()=>{
       queryClient.invalidateQueries({queryKey:["events",id],refetchType:false});
      },
-     onSuccess:()=>{
-      alert("Event updated");
-      setUpdateSuccess(true);
-      setOpenModalEdit(false);
-     }
    })
   
    const formattedDate = new Date(data?.date).toLocaleDateString("en-US", {
@@ -59,7 +52,7 @@ export default function Event(){
   });
   const currency =  new Intl.NumberFormat("en-US", {style:"currency",currency:"usd",maximumSignificantDigits:3}).format(data?.price);
     function handleChangeModal(){
-      setOpenModalEdit(prevValue=>!prevValue)
+      setOpenModalEdit(prevValue=>!prevValue);
     }
     function handleEditdata(formData){
       const updatedEvent = {
@@ -67,6 +60,7 @@ export default function Event(){
         id:id
       }
       mutation.mutate({id:id,event:updatedEvent});
+      setOpenModalEdit(false);
     }
     let modal;
     if(openModalEdit){
@@ -74,12 +68,13 @@ export default function Event(){
              <Form handleSubmit={handleEditdata} data={data} typeText="Edit" isPending={mutation.isPending}/> 
              </Modal>
     }
+    let placeholderSpiner = <div className={Style.imagePlaceholder}><SpinnerLoader/></div>;
     return <> 
    <main className={Style.main}> 
         {modal}
         <NavLink to="/events" className={Style.return}><BiArrowBack/> Back to all events</NavLink>
-        <div className={Style.mainDiv}>
-        <img src={`http://localhost:3000/${data?.image}`} className={Style.mainImage} alt="image"  />
+        {isPending||mutation.isPending ? <SpinnerLoader/>:<div className={Style.mainDiv}>
+        <LazyLoadImage src={`http://localhost:3000/${data?.image}`} className={Style.mainImage} alt="image" effect="blur" placeholder={placeholderSpiner}  wrapperClassName={Style.imageWrapper} />
         <h1>{data?.title}</h1>
         <div className={Style.info}>
             <p className={Style.price}> {currency}</p>
@@ -89,7 +84,8 @@ export default function Event(){
         </div>
             <p className={Style.desc}>{data?.description}</p>
             <p className={Style.entries}>{data?.entries} entries available</p>
-        </div>
+        </div>}
+      
     </main>
     <div className={Style.divButton}>
             <button className={Style.edit} onClick={handleChangeModal} >Edit</button>

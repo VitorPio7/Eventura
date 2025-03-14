@@ -1,6 +1,7 @@
 import Style from "../css/Modal.module.css";
 import {  useEffect, useRef } from "react";
 import {createPortal} from "react-dom";
+
 export default function Modal({typeText, handleChangeModal,children,isPending}){
     const dialog = useRef();
     useEffect(()=>{

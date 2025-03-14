@@ -5,6 +5,8 @@ import { fetchEvents } from "../util/http";
 import CardEvent from "../componentes/CardEvent";
 import SearchBar from "../componentes/SearchBar";
 import SeeAll from "../componentes/SeeAll";
+
+import 'react-lazy-load-image-component/src/effects/blur.css';
 export default function Events() {
     const searElement = useRef();
     const [search, setSearch] = useState();
