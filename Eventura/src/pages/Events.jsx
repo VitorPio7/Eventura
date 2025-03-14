@@ -1,11 +1,10 @@
 import Style from "./css/Events.module.css";
-import { useRef, useState } from "react";
+import { useRef, useState,createPortal } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchEvents } from "../util/http";
 import CardEvent from "../componentes/CardEvent";
 import SearchBar from "../componentes/SearchBar";
 import SeeAll from "../componentes/SeeAll";
-
 import 'react-lazy-load-image-component/src/effects/blur.css';
 export default function Events() {
     const searElement = useRef();
@@ -35,9 +34,8 @@ export default function Events() {
         content = data.event.map((el)=><CardEvent key={el.id} {...el} /> )
         if(data.event.length === 0){
             content = <>
-            <p>no events found, verify all events bellow.</p> 
+             
             {allData.data.map((el)=><CardEvent key={el.id} {...el} />)}</> 
-              
         }  
     }
     if(allData.data && seeAll){
@@ -49,6 +47,7 @@ export default function Events() {
         {isLoading && <p>Loading events...</p>}
         {isError && <p>Error loading events: {error.message}</p>}           
         {!seeAll && <SeeAll text="please enter a search term to find events" event={()=>setSeeAll(true)}/>}
+        {data?.event.length ===0?<p style={{}}>no event found, verify all events bellow.</p>:null}
         <div className={Style.content}>
          {content}      
          </div>
