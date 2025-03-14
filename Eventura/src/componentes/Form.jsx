@@ -1,5 +1,5 @@
 import Style from "../componentes/css/Form.module.css"
-export default function Form({handleSubmit,typeText,data,}) {
+export default function Form({handleSubmit,typeText,data,isPending,isSucess}) {
     function onSubmit(event){
         event.preventDefault();
         let formData = new FormData(event.target);
@@ -16,6 +16,7 @@ export default function Form({handleSubmit,typeText,data,}) {
         };
         handleSubmit(eventData);
     }
+    
     return <form className={Style.formDiv} onSubmit={onSubmit}>
     <label htmlFor="name">Title</label>
             <input type="text" name="name" defaultValue={data?.title??''} required/>
@@ -33,6 +34,6 @@ export default function Form({handleSubmit,typeText,data,}) {
             <input type="text" name="image" defaultValue={data?.image??''} required/>    
             <label htmlFor="description">Description</label>
             <textarea name="description" required defaultValue={data?.description??''} ></textarea> 
-            <button > {typeText}</button> 
+            <button disabled={isPending} style={{backgroundColor:isPending?"#FBA518":""}} > { isPending?"Loading...":typeText}</button> 
         </form>
 }

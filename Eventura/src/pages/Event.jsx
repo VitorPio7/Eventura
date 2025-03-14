@@ -43,18 +43,16 @@ export default function Event(){
     }
     function handleEditdata(formData){
       mutation.mutate({id:id,event:formData});
-      setOpenModalEdit(false);
     }
     let modal;
     if(openModalEdit){
-      modal = <Modal handleChangeModal={handleChangeModal} typeText="Edit">
-             <Form handleSubmit={handleEditdata} data={data} typeText="Edit"/> 
+      modal = <Modal handleChangeModal={handleChangeModal} isPending={mutation.isPending} isSucess={mutation.isSuccess} typeText="Edit">
+             <Form handleSubmit={handleEditdata} data={data} typeText="Edit" isPending={mutation.isPending}/> 
              </Modal>
     }
     return <> 
    <main className={Style.main}> 
         {modal}
-        {mutation.isPending && <SpinnerLoader/>}
         <NavLink to="/events" className={Style.return}><BiArrowBack/> Back to all events</NavLink>
         <div className={Style.mainDiv}>
         <img src={`http://localhost:3000/${data?.image}`} className={Style.mainImage} alt="image"  />

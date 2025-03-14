@@ -1,0 +1,16 @@
+.modal::backdrop {
+    background: hsl(0 0% 0% / 50%);
+  }
+.modal{
+    
+    margin: 0;
+    width: 300px;
+    height: 90vh;
+    border-radius:16px ;
+    border: none;
+    animation: slide-down-fade-in 300ms ease-out forwards;
+}
+body > .modal{
+    align-self: center;
+    justify-self: center;
+}
