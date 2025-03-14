@@ -1,16 +1,28 @@
 import { useParams } from "react-router";
-import { useQuery,useMutation } from "@tanstack/react-query";
-import {fetchById,updateEvent,query } from "../util/http";
+import { useQuery,useMutation, useQueryClient } from "@tanstack/react-query";
+import {fetchById,updateEvent } from "../util/http";
 import { BiArrowBack } from "react-icons/bi";
 import { NavLink } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Style from "./css/Event.module.css"
 import Modal from "./Modal/Modal";
 import Form from "../componentes/Form";
-import SpinnerLoader from "../componentes/SpinnerLoader"
+
+
+
 export default function Event(){
+  const queryClient = useQueryClient();
    let {id} = useParams();
    let [openModalEdit,setOpenModalEdit] = useState(false);
+   let [updatedSuccess,setUpdateSuccess] = useState(false);
+
+   useEffect(()=>{
+    if(updatedSuccess){
+      alert("Event updated");
+      setUpdateSuccess(false);
+    }
+   },[openModalEdit]);
+
    let {data,isPending,isError,error} = useQuery({
      queryKey:["events",id],
      queryFn:({signal})=>fetchById({id,signal})
@@ -18,20 +30,28 @@ export default function Event(){
    let mutation = useMutation({
      mutationFn:updateEvent,
      onMutate: async(data)=>{
-      const newEvent = data.event;
-      await query.cancelQueries({queryKey:["events",id]});
-      const previousEvent = query.getQueryData(["events",id]);
-      query.setQueryData(['events',id],newEvent);
-      return {previousEvent}
+      await queryClient.cancelQueries({queryKey:["events",id]});
+      const previousEvent = queryClient.getQueryData(["events",id]);
+      queryClient.setQueryData(["events",id],{
+        event:{
+        ...previousEvent?.event,
+        ...data.event
+      }});
+      return {previousEvent};
     },
     onError:(error,data,context)=>{
-      query.setQueryData(['events',id],context.previousEvent);
+      queryClient.setQueryData(['events',id],context.previousEvent);
      },
      onSettled:()=>{
-      query.invalidateQueries(["events",id]);
+      queryClient.invalidateQueries({queryKey:["events",id],refetchType:false});
+     },
+     onSuccess:()=>{
+      alert("Event updated");
+      setUpdateSuccess(true);
+      setOpenModalEdit(false);
      }
    })
- 
+  
    const formattedDate = new Date(data?.date).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
@@ -42,7 +62,11 @@ export default function Event(){
       setOpenModalEdit(prevValue=>!prevValue)
     }
     function handleEditdata(formData){
-      mutation.mutate({id:id,event:formData});
+      const updatedEvent = {
+        ...formData,
+        id:id
+      }
+      mutation.mutate({id:id,event:updatedEvent});
     }
     let modal;
     if(openModalEdit){

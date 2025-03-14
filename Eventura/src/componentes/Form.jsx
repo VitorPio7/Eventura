@@ -1,4 +1,4 @@
-import Style from "../componentes/css/Form.module.css"
+import Style from "../componentes/css/Form.module.css";
 export default function Form({handleSubmit,typeText,data,isPending,isSucess}) {
     function onSubmit(event){
         event.preventDefault();
