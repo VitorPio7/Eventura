@@ -8,6 +8,7 @@ import Style from "./css/Event.module.css"
 import Modal from "./Modal/Modal";
 import Form from "../componentes/Form";
 import SpinnerLoader from "../componentes/SpinnerLoader";
+import BadgeSuccess from "./Modal/BadgeSucess.jsx";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
@@ -16,8 +17,7 @@ export default function Event(){
   const queryClient = useQueryClient();
    let {id} = useParams();
    let [openModalEdit,setOpenModalEdit] = useState(false);
-  
-
+   let [openBadgeSucess,setOpenBadgeSucess] = useState(false);
    console.log(openModalEdit)
    let {data,isPending,isError,error} = useQuery({
      queryKey:["events",id],
@@ -26,23 +26,18 @@ export default function Event(){
 
    let mutation = useMutation({
      mutationFn:updateEvent,
-     onMutate: async(data)=>{
-      await queryClient.cancelQueries({queryKey:["events",id]});
-      const previousEvent = queryClient.getQueryData(["events",id]);
-      queryClient.setQueryData(["events",id],{
-        event:{
-        ...previousEvent?.event,
-        ...data.event
-      }});
-      return {previousEvent};
-      
+    onSuccess:()=>{
+      console.log("Mutation successful in global handler");
+      queryClient.invalidateQueries({queryKey:['events',id]})
     },
-    onError:(error,data,context)=>{
-      queryClient.setQueryData(['events',id],context.previousEvent);
+     onError:(error)=>{
+      console.error("Mutation error in global handler:", error.message,error.stack);
      },
      onSettled:()=>{
-      queryClient.invalidateQueries({queryKey:["events",id],refetchType:false});
+     
+      queryClient.invalidateQueries({queryKey:["events",id],refetchActive:false});
      },
+    
    })
   
    const formattedDate = new Date(data?.date).toLocaleDateString("en-US", {
@@ -58,9 +53,23 @@ export default function Event(){
       const updatedEvent = {
         ...formData,
         id:id
-      }
-      mutation.mutate({id:id,event:updatedEvent});
-      setOpenModalEdit(false);
+      };
+      console.log("Submitting data to server:", { id: id, event: updatedEvent });
+      mutation.mutate(
+        { id: id, event: updatedEvent },
+        {onSuccess:()=>{
+          console.log("Mutation successful in local handler");
+          setOpenModalEdit(prevValue=>!prevValue);
+          setOpenBadgeSucess(true);
+          setTimeout(()=>{
+            setOpenBadgeSucess(false);
+           },5000)
+        },
+        onError: (error) => {
+          console.error("Error in mutation:", error.message,error.stack);
+          alert(`Failed to update event: ${error.message}. Please check your connection and try again.`);
+        }},
+      ); 
     }
     let modal;
     if(openModalEdit){
@@ -69,8 +78,11 @@ export default function Event(){
              </Modal>
     }
     let placeholderSpiner = <div className={Style.imagePlaceholder}><SpinnerLoader/></div>;
+    
     return <> 
    <main className={Style.main}> 
+   {console.log("Badge state:", openBadgeSucess)}
+        {openBadgeSucess&&<BadgeSuccess/>}
         {modal}
         <NavLink to="/events" className={Style.return}><BiArrowBack/> Back to all events</NavLink>
         {isPending||mutation.isPending ? <SpinnerLoader/>:<div className={Style.mainDiv}>
