@@ -1,5 +1,6 @@
 import {createBrowserRouter, RouterProvider} from "react-router";
 import Events from "./pages/Events";
+import {action} from "./pages/Event"
 import Home from "./pages/Home";
 import Root from './pages/Root';
 import About from "./pages/About";
@@ -26,6 +27,7 @@ const roter = createBrowserRouter([
       },
       {
         path:'events/:id',
+        action:action,
         element:<Event/>
       }
     ]
