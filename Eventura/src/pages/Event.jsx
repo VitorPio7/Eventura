@@ -26,15 +26,10 @@ export default function Event(){
 
    let mutation = useMutation({
      mutationFn:updateEvent,
-    onSuccess:()=>{
-      console.log("Mutation successful in global handler");
-      queryClient.invalidateQueries({queryKey:['events',id]})
-    },
      onError:(error)=>{
       console.error("Mutation error in global handler:", error.message,error.stack);
      },
      onSettled:()=>{
-     
       queryClient.invalidateQueries({queryKey:["events",id],refetchActive:false});
      },
     
@@ -57,7 +52,7 @@ export default function Event(){
       console.log("Submitting data to server:", { id: id, event: updatedEvent });
       mutation.mutate(
         { id: id, event: updatedEvent },
-        {onSuccess:()=>{
+        {onSettled:()=>{
           console.log("Mutation successful in local handler");
           setOpenModalEdit(prevValue=>!prevValue);
           setOpenBadgeSucess(true);
@@ -65,10 +60,7 @@ export default function Event(){
             setOpenBadgeSucess(false);
            },5000)
         },
-        onError: (error) => {
-          console.error("Error in mutation:", error.message,error.stack);
-          alert(`Failed to update event: ${error.message}. Please check your connection and try again.`);
-        }},
+       },
       ); 
     }
     let modal;
