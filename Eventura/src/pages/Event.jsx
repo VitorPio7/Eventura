@@ -11,10 +11,10 @@ import SpinnerLoader from "../componentes/SpinnerLoader";
 import BadgeSuccess from "./Modal/BadgeSuccess.jsx";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import { useSubmit } from "react-router";
+import { useMutation } from "@tanstack/react-query";
 
 export default function Event(){
-   let submit = useSubmit();
+
    let {id} = useParams();
    let [openModalEdit,setOpenModalEdit] = useState(false);
    let [openBadgeSucess,setOpenBadgeSucess] = useState(false);
@@ -23,14 +23,14 @@ export default function Event(){
      queryFn:({signal})=>fetchById({id,signal})
    })
 
-  //  let mutation = useMutation({
-  //    mutationFn:updateEvent,
-  //    onSettled:()=>{
-  //     queryClient.invalidateQueries({queryKey:["events",id],refetchActive:false});
-  //    },
-    
-  //  })
-  
+   let mutation = useMutation({
+      mutationFn:updateEvent,
+      onSettled:()=>{
+       queryClient.invalidateQueries({queryKey:["events",id],refetchActive:false});
+      },
+
+   })
+
    const formattedDate = new Date(data?.date).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
@@ -41,38 +41,37 @@ export default function Event(){
       setOpenModalEdit(prevValue=>!prevValue);
     }
     function handleEditdata(formData){
-      // const updatedEvent = {
-      //   ...formData,
-      //   id:id
-      // };
-      // mutation.mutate(
-      //   { id: id, event: updatedEvent },
-      //   {onSettled:()=>{
-      //     setOpenModalEdit(prevValue=>!prevValue);
-      //     setOpenBadgeSucess(true);
-      //     setTimeout(()=>{
-      //       setOpenBadgeSucess(false);
-      //      },5000)
-      //   },
-      //  },
-      // ); 
-      submit(formData,{method:'PUT'});
-      // setOpenModalEdit(prevValue=>!prevValue);
-      // setOpenBadgeSucess(true);
-      // setTimeout(()=>{
-      //   setOpenBadgeSucess(false);
-      //  },5000)
+       const updatedEvent = {
+         ...formData,
+         id:id
+       };
+       mutation.mutate(
+        { id: id, event: updatedEvent },
+         {onSettled:()=>{
+           setOpenModalEdit(prevValue=>!prevValue);
+           setOpenBadgeSucess(true);
+           setTimeout(()=>{
+             setOpenBadgeSucess(false);
+            },5000)
+         },
+        },
+       );
+       setOpenModalEdit(prevValue=>!prevValue);
+       setOpenBadgeSucess(true);
+       setTimeout(()=>{
+         setOpenBadgeSucess(false);
+      },5000)
     }
     let modal;
     if(openModalEdit){
       modal = <Modal handleChangeModal={handleChangeModal} typeText="Edit">
-             <Form onSubmit={handleEditdata} data={data} typeText="Edit" /> 
+             <Form handleSubmit={handleEditdata} data={data} typeText="Edit" />
              </Modal>
     }
     let placeholderSpiner = <div className={Style.imagePlaceholder}><SpinnerLoader/></div>;
-    
-    return <> 
-   <main className={Style.main}> 
+
+    return <>
+   <main className={Style.main}>
    {console.log("Badge state:", openBadgeSucess)}
         {openBadgeSucess&&<BadgeSuccess/>}
         {modal}
@@ -89,17 +88,11 @@ export default function Event(){
             <p className={Style.desc}>{data?.description}</p>
             <p className={Style.entries}>{data?.entries} entries available</p>
         </div>
-      
+
     </main>
     <div className={Style.divButton}>
             <button className={Style.edit} onClick={handleChangeModal} >Edit</button>
             <button className={Style.delete}>Delete</button>
     </div>
     </>
-}
-export async function action({request,params}){
-  const formData = await request.formData();
-  const updatedEvent = Object.fromEntries(formData);
-  await updateEvent({id:params.id,event:updatedEvent});
-  await query.invalidateQueries(['events']);
 }

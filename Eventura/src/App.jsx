@@ -1,11 +1,11 @@
 import {createBrowserRouter, RouterProvider} from "react-router";
 import Events from "./pages/Events";
-import {action} from "./pages/Event"
+
 import Home from "./pages/Home";
 import Root from './pages/Root';
 import About from "./pages/About";
 import { QueryClientProvider } from "@tanstack/react-query";
-import {query} from "./util/http";
+import {query,updateEvent} from "./util/http";
 import Event from "./pages/Event";
 const roter = createBrowserRouter([
   {
@@ -27,8 +27,13 @@ const roter = createBrowserRouter([
       },
       {
         path:'events/:id',
-        action:action,
-        element:<Event/>
+        element:<Event/>,
+        action: async function({request,params}){
+          const formData = await request.formData();
+          const updatedEvent = Object.fromEntries(formData);
+          console.log(params)
+          await updateEvent({id:params.id,event:updatedEvent});
+          await query.invalidateQueries(['events',params.id])}
       }
     ]
   }
