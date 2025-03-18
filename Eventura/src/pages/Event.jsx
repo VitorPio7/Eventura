@@ -8,7 +8,7 @@ import Style from "./css/Event.module.css"
 import Modal from "./Modal/Modal";
 import Form from "../componentes/Form";
 import SpinnerLoader from "../componentes/SpinnerLoader";
-import BadgeSuccess from "./Modal/BadgeSuccess.jsx";
+import Badge from "./Modal/Badge.jsx";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { useMutation } from "@tanstack/react-query";
@@ -17,7 +17,9 @@ export default function Event(){
 
    let {id} = useParams();
    let [openModalEdit,setOpenModalEdit] = useState(false);
+   let [messageError,setMessageError] = useState("");
    let [openBadgeSucess,setOpenBadgeSucess] = useState(false);
+   let [openBadgeError,setBadgeError] = useState(false);
    let {data,isPending,isError,error} = useQuery({
      queryKey:["events",id],
      queryFn:({signal})=>fetchById({id,signal})
@@ -55,13 +57,22 @@ export default function Event(){
        const data = Object.fromEntries(fd.entries());
        mutation.mutate(
         { id: id, event: data },
+        {onSuccess:()=>{
+          setOpenModalEdit(prevValue=>!prevValue);
+          setOpenBadgeSucess(true);
+          setTimeout(()=>{
+            setOpenBadgeSucess(false);
+         },5000)
+        },
+        onError:(error)=>{
+          setBadgeError(true);
+          setTimeout(()=>{
+            setBadgeError(false);
+          })
+        },
+        }
        );
-       
-       setOpenModalEdit(prevValue=>!prevValue);
-       setOpenBadgeSucess(true);
-       setTimeout(()=>{
-         setOpenBadgeSucess(false);
-      },5000)
+   
     }
     let modal;
     if(openModalEdit){
@@ -74,7 +85,8 @@ export default function Event(){
     return <>
    <main className={Style.main}>
    {console.log("Badge state:", openBadgeSucess)}
-        {openBadgeSucess&&<BadgeSuccess/>}
+        {openBadgeSucess&&<Badge type="success" text="Your data was saved!"/>}
+        {openBadgeError && <Badge type="error" text="There was a problem!"/>}
         {modal}
         <NavLink to="/events" className={Style.return}><BiArrowBack/> Back to all events</NavLink>
       <div className={Style.mainDiv}>
