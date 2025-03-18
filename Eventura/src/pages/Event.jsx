@@ -25,10 +25,19 @@ export default function Event(){
 
    let mutation = useMutation({
       mutationFn:updateEvent,
-      onSettled:()=>{
-       queryClient.invalidateQueries({queryKey:["events",id],refetchActive:false});
+      onMutate: async(data)=>{
+           let dataEvent = data.event;
+           await query.cancelQueries({queryKey:["events",id]});
+           const previousEvent = query.getQueryData(["events",id]);
+           query.setQueryData(['event',id],dataEvent)
+           return {previousEvent};
       },
-
+     onError:(error,data,context)=>{
+      query.setQueryData(['events',id],context.previousEvent);
+     },
+     onSettled:()=>{
+       query.invalidateQueries(['events',id]);
+     }
    })
 
    const formattedDate = new Date(data?.date).toLocaleDateString("en-US", {
@@ -40,22 +49,14 @@ export default function Event(){
     function handleChangeModal(){
       setOpenModalEdit(prevValue=>!prevValue);
     }
-    function handleEditdata(formData){
-       const updatedEvent = {
-         ...formData,
-         id:id
-       };
+    function handleEditdata(event){
+      event.preventDefault();
+       const fd = new FormData(event.target);
+       const data = Object.fromEntries(fd.entries());
        mutation.mutate(
-        { id: id, event: updatedEvent },
-         {onSettled:()=>{
-           setOpenModalEdit(prevValue=>!prevValue);
-           setOpenBadgeSucess(true);
-           setTimeout(()=>{
-             setOpenBadgeSucess(false);
-            },5000)
-         },
-        },
+        { id: id, event: data },
        );
+       
        setOpenModalEdit(prevValue=>!prevValue);
        setOpenBadgeSucess(true);
        setTimeout(()=>{

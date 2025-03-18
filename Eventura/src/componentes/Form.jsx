@@ -1,5 +1,5 @@
 import Style from "../componentes/css/Form.module.css";
-export default function Form({handleSubmit,onSubmit,data,isPending,isSucess}) {
+export default function Form({handleSubmit,data}) {
     
     return <form className={Style.formDiv} onSubmit={handleSubmit}>
     <label htmlFor="title">Title</label>
