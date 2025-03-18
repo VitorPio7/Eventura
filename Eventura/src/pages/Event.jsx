@@ -36,6 +36,7 @@ export default function Event(){
       },
      onError:(error,data,context)=>{
       query.setQueryData(['events',id],context.previousEvent);
+     
      },
      onSettled:()=>{
        query.invalidateQueries(['events',id]);
@@ -58,21 +59,23 @@ export default function Event(){
        mutation.mutate(
         { id: id, event: data },
         {onSuccess:()=>{
-          setOpenModalEdit(prevValue=>!prevValue);
           setOpenBadgeSucess(true);
+          setOpenModalEdit(prevValue=>!prevValue);
           setTimeout(()=>{
             setOpenBadgeSucess(false);
          },5000)
         },
         onError:(error)=>{
+          setMessageError(error.message);
           setBadgeError(true);
+          setOpenModalEdit(prevValue=>!prevValue);
           setTimeout(()=>{
             setBadgeError(false);
-          })
+          },5000)
         },
         }
        );
-   
+      
     }
     let modal;
     if(openModalEdit){
@@ -86,7 +89,7 @@ export default function Event(){
    <main className={Style.main}>
    {console.log("Badge state:", openBadgeSucess)}
         {openBadgeSucess&&<Badge type="success" text="Your data was saved!"/>}
-        {openBadgeError && <Badge type="error" text="There was a problem!"/>}
+        {openBadgeError && <Badge type="error" text={messageError||"There was a problem!"}/>}
         {modal}
         <NavLink to="/events" className={Style.return}><BiArrowBack/> Back to all events</NavLink>
       <div className={Style.mainDiv}>
