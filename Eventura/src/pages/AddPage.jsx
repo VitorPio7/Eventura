@@ -1,10 +1,25 @@
-import Style from "./css/AddPage.module.css"
+import Style from "./css/AddPage.module.css";
+import { useMutation } from "@tanstack/react-query";
+import {createNewEvent} from "../util/http"
 export default function AddPage(){
+    let mutate = useMutation({
+        mutationFn:createNewEvent,
+    });
     function handleSubmit(e){
         e.preventDefault();
         let fd = new FormData(e.target);
-        const data = Object.fromEntries(fd.entries());
-        console.log(data);
+        const eventData = Object.fromEntries(fd.entries());
+        console.log(eventData)
+        mutate.mutate({event:eventData},{
+            onSuccess:()=>{
+                alert("Event created.");
+            },
+            onError:(error)=>{
+                alert(error.message);
+            }
+        },
+    );
+        
     }
     return <div className={Style.myForm}> <h1>Add a new event.</h1>
       <form onSubmit={handleSubmit}>
