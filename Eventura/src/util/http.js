@@ -59,7 +59,6 @@ export async function updateEvent({ id, event }) {
     return response.json();
 }
 export async function createNewEvent(eventData) {
-    console.log("This was the data passed:", eventData)
     const response = await fetch("http://localhost:3000/events", {
         method: "POST",
         body: JSON.stringify(eventData),

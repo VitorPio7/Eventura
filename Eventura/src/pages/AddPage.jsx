@@ -9,7 +9,6 @@ export default function AddPage(){
         e.preventDefault();
         let fd = new FormData(e.target);
         const eventData = Object.fromEntries(fd.entries());
-        console.log(eventData)
         mutate.mutate({event:eventData},{
             onSuccess:()=>{
                 alert("Event created.");

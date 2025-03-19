@@ -1,6 +1,5 @@
 import fs from 'node:fs/promises';
-import multer from 'multer';
-import path from 'node:path';
+
 import bodyParser from 'body-parser';
 import express from 'express';
 
@@ -8,16 +7,7 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(express.static('public'));
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'public')
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1E9)
-    cb(null, uniqueSuffix + path.extname(file.originalname))
-  }
-})
-const upload = multer({ storage });
+
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
@@ -78,7 +68,7 @@ app.get('/events/:id', async (req, res) => {
   if (!event) {
     return res
       .status(404)
-      .json({ message: `For the id ${id}, no event could be found.` });
+      .json({ message: ` For the id ${id}, no event could be found. ` });
   }
 
   setTimeout(() => {
@@ -86,9 +76,8 @@ app.get('/events/:id', async (req, res) => {
   }, 1000);
 });
 
-app.post('/events', upload.single('image'), async (req, res) => {
+app.post('/events', async (req, res) => {
   const { event } = req.body;
-  const imageUrl = req.file ? `/uploads/${req.file.filename}` : null;
 
   if (!event) {
     return res.status(400).json({ message: 'Event is required' });
@@ -96,12 +85,14 @@ app.post('/events', upload.single('image'), async (req, res) => {
 
   console.log(event);
 
-  if (!event ||
+  if (
     !event.title?.trim() ||
     !event.price?.trim() ||
     !event.entries?.trim() ||
     !event.description?.trim() ||
+    !event.date?.trim() ||
     !event.time?.trim() ||
+    !event.image?.trim() ||
     !event.location?.trim()
   ) {
     return res.status(400).json({ message: 'Invalid data provided.' });
@@ -113,7 +104,6 @@ app.post('/events', upload.single('image'), async (req, res) => {
   const newEvent = {
     id: Math.round(Math.random() * 10000).toString(),
     ...event,
-    image: imageUrl || event.image,
   };
 
   events.push(newEvent);
@@ -123,20 +113,20 @@ app.post('/events', upload.single('image'), async (req, res) => {
   res.json({ event: newEvent });
 });
 
-app.put('/events/:id', upload.single('image'), async (req, res) => {
+app.put('/events/:id', async (req, res) => {
   const { id } = req.params;
-  const event = JSON.parse(req.body.event);
-  const imageUrl = req.file ? `/uploads/${req.file.filename}` : event.image;
+  const { event } = req.body;
+
   if (!event) {
     return res.status(400).json({ message: 'Event is required' });
   }
 
   if (
-    !event ||
     !event.title?.trim() ||
     !event.description?.trim() ||
     !event.date?.trim() ||
     !event.time?.trim() ||
+    !event.image?.trim() ||
     !event.location?.trim() ||
     !event.entries?.trim() ||
     !event.price?.trim()
@@ -157,7 +147,6 @@ app.put('/events/:id', upload.single('image'), async (req, res) => {
   events[eventIndex] = {
     id,
     ...event,
-    image: imageUrl,
   };
 
   await fs.writeFile('./data/events.json', JSON.stringify(events));
@@ -190,4 +179,4 @@ app.delete('/events/:id', async (req, res) => {
 
 app.listen(3000, () => {
   console.log('Server running on port 3000');
-});
+})
