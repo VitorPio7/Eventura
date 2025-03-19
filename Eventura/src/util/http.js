@@ -58,3 +58,20 @@ export async function updateEvent({ id, event }) {
 
     return response.json();
 }
+export async function createNewEvent(eventData) {
+    const response = await fetch("httpp://localhost:3000/events", {
+        method: "POST",
+        body: JSON.stringify(eventData),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+    if (!response.ok) {
+        const error = new Error('An error occurred while creating the event');
+        error.code = response.status;
+        error.info = await response.json();
+        throw error;
+    }
+    const { event } = await response.json();
+    return event;
+}

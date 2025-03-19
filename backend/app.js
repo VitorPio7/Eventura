@@ -1,5 +1,6 @@
 import fs from 'node:fs/promises';
-
+import multer from 'multer';
+import path from 'node:path';
 import bodyParser from 'body-parser';
 import express from 'express';
 
@@ -7,7 +8,16 @@ const app = express();
 
 app.use(bodyParser.json());
 app.use(express.static('public'));
-
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public')
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1E9)
+    cb(null, uniqueSuffix + path.extname(file.originalname))
+  }
+})
+const upload = multer({ storage });
 app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader(
