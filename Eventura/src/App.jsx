@@ -1,6 +1,6 @@
 import {createBrowserRouter, RouterProvider} from "react-router";
 import Events from "./pages/Events";
-
+import AddPage from "./pages/AddPage"
 import Home from "./pages/Home";
 import Root from './pages/Root';
 import About from "./pages/About";
@@ -27,13 +27,11 @@ const roter = createBrowserRouter([
       },
       {
         path:'events/:id',
-        element:<Event/>,
-        action: async function({request,params}){
-          const formData = await request.formData();
-          const updatedEvent = Object.fromEntries(formData);
-          console.log(params)
-          await updateEvent({id:params.id,event:updatedEvent});
-          await query.invalidateQueries(['events',params.id])}
+        element:<Event/>
+      },
+      {
+        path:'add',
+        element:<AddPage/>
       }
     ]
   }
