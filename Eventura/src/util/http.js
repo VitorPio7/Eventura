@@ -66,6 +66,7 @@ export async function createNewEvent(eventData) {
             'Content-Type': 'application/json'
         }
     })
+    console.log(response)
     if (!response.ok) {
         const error = new Error('An error occurred while creating the event');
         error.code = response.status;
