@@ -5,20 +5,21 @@ import { BiArrowBack } from "react-icons/bi";
 import { NavLink } from "react-router";
 import { useState } from "react";
 import Style from "./css/Event.module.css";
-import Modal from "./Modal/Modal";
+import {Modal} from "./Modal/Modal";
 import Form from "../componentes/Form";
 import SpinnerLoader from "../componentes/SpinnerLoader";
 import Badge from "./Modal/Badge.jsx";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useMutation } from "@tanstack/react-query";
-
+import Popup from "./Modal/Popup.jsx";
 export default function Event() {
   let { id } = useParams();
   let [openModalEdit, setOpenModalEdit] = useState(false);
   let [messageError, setMessageError] = useState("");
   let [openBadgeSucess, setOpenBadgeSucess] = useState(false);
   let [openBadgeError, setBadgeError] = useState(false);
+  let [handleDelete,setHandleDelete] = useState(false);
   let { data, isPending, isError, error } = useQuery({
     queryKey: ["events", id],
     queryFn: ({ signal }) => fetchById({ id, signal }),
@@ -56,6 +57,9 @@ export default function Event() {
   function handleChangeModal() {
     setOpenModalEdit((prevValue) => !prevValue);
   }
+  function handleChangeModalDelete(){
+    setHandleDelete((prevValue)=>!prevValue);
+  }
   function handleEditdata(event) {
     event.preventDefault();
     const fd = new FormData(event.target);
@@ -85,7 +89,7 @@ export default function Event() {
   let modal;
   if (openModalEdit) {
     modal = (
-      <Modal handleChangeModal={handleChangeModal} typeText="Edit">
+      <Modal handleChangeModal={handleChangeModal}  typeText="Edit">
         <Form
           handleSubmit={handleEditdata}
           data={data}
@@ -105,6 +109,7 @@ export default function Event() {
     <>
       <main className={Style.main}>
         {console.log("Badge state:", openBadgeSucess)}
+        {handleDelete && <Popup handleChangeModal={handleChangeModalDelete}  actionName="Delete">Are you sure?</Popup>}
         {openBadgeSucess && (
           <Badge type="success" text="Your data was saved!" />
         )}
@@ -139,7 +144,7 @@ export default function Event() {
         <button className={Style.edit} onClick={handleChangeModal}>
           Edit
         </button>
-        <button className={Style.delete}>Delete</button>
+        <button className={Style.delete} onClick={handleChangeModalDelete} >Delete</button>
       </div>
     </>
   );
