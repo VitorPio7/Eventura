@@ -24,6 +24,18 @@ export async function fetchEvents({ signal, search }) {
         return [];
     }
 }
+export async function fetchAllImages({ signal }) {
+    let url = "http://localhost:3000/events/images";
+    let response = await fetch(url, { signal });
+    if (!response.ok) {
+        let error = new Error("Error fetching events");
+        error.code = response.status;
+        error.info = await response.json();
+        throw error;
+    }
+    const { images } = await response.json();
+    return images;
+}
 export async function fetchById({ id, signal }) {
     let url = "http://localhost:3000/events/" + id;
     let response = await fetch(url, { signal });
@@ -41,7 +53,7 @@ export async function updateEvent({ id, event }) {
     let url = "http://localhost:3000/events/" + id;
     let response = await fetch(url, {
         method: "PUT",
-        body: JSON.stringify({ event }),
+        body: JSON.stringify( event ),
         headers: {
             "Content-Type": "application/json"
         }
