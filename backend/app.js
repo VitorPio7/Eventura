@@ -1,8 +1,6 @@
 import fs from 'node:fs/promises';
-
 import bodyParser from 'body-parser';
 import express from 'express';
-
 const app = express();
 
 app.use(bodyParser.json());
@@ -18,6 +16,7 @@ app.use((req, res, next) => {
     'Access-Control-Allow-Headers',
     'X-Requested-With,content-type'
   );
+
   next();
 });
 
