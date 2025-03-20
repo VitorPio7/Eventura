@@ -22,5 +22,45 @@
   {
     "path": "OutdoorPhotography.jpg",
     "caption": "a outdoor photograpy."
+  },
+  {
+    "path": "carnavalParty.jpg",
+    "caption": "carnaval party "
+  },
+  {
+    "path": "carnavalParty2.jpg",
+    "caption": "carnaval party"
+  },
+  {
+    "path": "carnavalParty3.jpg",
+    "caption": "carnaval party"
+  },
+  {
+    "path": "carnavalParty4.jpg",
+    "caption": "carnaval party "
+  },
+  {
+    "path": "djParty.jpg",
+    "caption": "dj party"
+  },
+  {
+    "path": "drinkParty.jpg",
+    "caption": "drink party"
+  },
+  {
+    "path": "drinkPart1.jpg",
+    "caption": "drink party"
+  },
+  {
+    "path": "rockConcert1.jpg",
+    "caption": "rock concert"
+  },
+  {
+    "path": "rockConcert2.jpg",
+    "caption": "rock concert"
+  },
+  {
+    "path": "rockConcert3.jpg",
+    "caption": "rock concert"
   }
 ]
