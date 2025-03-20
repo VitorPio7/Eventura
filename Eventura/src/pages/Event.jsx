@@ -1,6 +1,6 @@
 import { useParams } from "react-router";
 import { useQuery } from "@tanstack/react-query";
-import { fetchById, fetchAllImages, updateEvent } from "../util/http";
+import { fetchById, fetchAllImages, updateEvent,queryClient } from "../util/http";
 import { BiArrowBack } from "react-icons/bi";
 import { NavLink } from "react-router";
 import { useState } from "react";
@@ -31,18 +31,18 @@ export default function Event() {
     mutationFn: updateEvent,
     onMutate: async (data) => {
       let dataEvent = data.event;
-      await query.cancelQueries({ queryKey: ["events", id] });
-      const previousEvent = query.getQueryData(["events", id]);
-      query.setQueryData(["events", id], dataEvent);
+      await queryClient.cancelQueries({ queryKey: ["events", id] });
+      const previousEvent = queryClient.getQueryData(["events", id]);
+      queryClient.setQueryData(["events", id], dataEvent);
       return { previousEvent };
     },
     onError: (error, data, context) => {
-      query.setQueryData(["events", id], context.previousEvent);
+      queryClient.setQueryData(["events", id], context.previousEvent);
     },
     onSettled: () => {
-      query.invalidateQueries(["events", id]);
+      queryClient.invalidateQueries(["events", id]);
     },
-  })
+  });
   const formattedDate = new Date(data?.date).toLocaleDateString("en-US", {
     year: "numeric",
     month: "short",
@@ -60,8 +60,9 @@ export default function Event() {
     event.preventDefault();
     const fd = new FormData(event.target);
     const data = Object.fromEntries(fd.entries());
+    console.log(data);
     mutation.mutate(
-      { id: id, event: data },
+      {id:id, event: data },
       {
         onSuccess: () => {
           setOpenBadgeSucess(true);

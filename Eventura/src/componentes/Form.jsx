@@ -5,6 +5,7 @@ export default function Form({ handleSubmit, data, imageData }) {
       <label htmlFor="title">Title</label>
       <input
         type="text"
+        minLength="12"
         maxLength="17"
         name="title"
         defaultValue={data?.title ?? ""}

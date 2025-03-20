@@ -1,6 +1,6 @@
 import { QueryClient } from "@tanstack/react-query";
 
-export const query = new QueryClient();
+export const queryClient = new QueryClient();
 export async function fetchEvents({ signal, search }) {
     let url = "http://localhost:3000/events";
     if (search) {
@@ -53,7 +53,7 @@ export async function updateEvent({ id, event }) {
     let url = "http://localhost:3000/events/" + id;
     let response = await fetch(url, {
         method: "PUT",
-        body: JSON.stringify( event ),
+        body: JSON.stringify({ event }),
         headers: {
             "Content-Type": "application/json"
         }

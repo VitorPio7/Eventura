@@ -5,7 +5,7 @@ import Home from "./pages/Home";
 import Root from './pages/Root';
 import About from "./pages/About";
 import { QueryClientProvider } from "@tanstack/react-query";
-import {query,updateEvent} from "./util/http";
+import {queryClient,updateEvent} from "./util/http";
 import Event from "./pages/Event";
 const roter = createBrowserRouter([
   {
@@ -40,7 +40,7 @@ const roter = createBrowserRouter([
 function App() {
   return (
     <>
-    <QueryClientProvider client={query}>
+    <QueryClientProvider client={queryClient}>
       <RouterProvider router={roter}/>
     </QueryClientProvider>
     </>
