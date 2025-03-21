@@ -36,3 +36,10 @@
   margin-top: 10px;
   cursor: pointer;
 }
+.myForm select{
+  width: 320px;
+  height: 38px;
+  border-radius: 5px;
+  border: transparent;
+  box-shadow: 1px 1px 1px 1px rgb(200, 200, 200);
+}

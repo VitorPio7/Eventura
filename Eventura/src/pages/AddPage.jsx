@@ -95,7 +95,7 @@ export default function AddPage() {
         <br />
         <textarea name="description" maxLength="200" required></textarea>
         <br />
-        <button>Send data</button>
+        <button disabled={mutate.isPending}>{mutate.isPending?"...Pending":"Send data"}</button>
       </form>
     </div>
   );

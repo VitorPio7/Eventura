@@ -146,7 +146,7 @@ export default function Event() {
   return (
     <>
       <main className={Style.main}>
-        {openPopup&&<Popup handleChangeModal={handlePopup} handleAction={handleDeleteData} actionName="delete">Would you to delete?</Popup>}
+        {openPopup&&<Popup pending={deleteMutation.isPending} handleChangeModal={handlePopup} handleAction={handleDeleteData} actionName="delete">Would you to delete?</Popup>}
         {modal}
         {<ToastContainer/>}
         <NavLink to="/events" className={Style.return}>
