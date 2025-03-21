@@ -4,6 +4,7 @@ import AddPage from "./pages/AddPage"
 import Home from "./pages/Home";
 import Root from './pages/Root';
 import About from "./pages/About";
+import EditEvent from "./pages/EditEvent"
 import { QueryClientProvider } from "@tanstack/react-query";
 import {queryClient,updateEvent} from "./util/http";
 import Event from "./pages/Event";
@@ -27,7 +28,11 @@ const roter = createBrowserRouter([
       },
       {
         path:'events/:id',
-        element:<Event/>
+        element:<Event/>,
+      },
+      {
+        path:'events/:id/edit',
+        element:<EditEvent/>,
       },
       {
         path:'add',

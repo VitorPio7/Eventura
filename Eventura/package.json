@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.67.1",
+    "@tanstack/react-query": "^5.69.0",
     "dom": "^0.0.3",
     "eventura": "file:",
     "react": "^19.0.0",

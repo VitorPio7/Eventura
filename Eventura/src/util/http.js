@@ -88,7 +88,7 @@ export async function createNewEvent(eventData) {
     const { event } = await response.json();
     return event;
 }
-export async function deleteEvent({ id }) {
+export async function deleteEvent(id) {
     const response = await fetch(`http://localhost:3000/events/${id}`, {
         method: "DELETE",
     })
@@ -97,6 +97,9 @@ export async function deleteEvent({ id }) {
         error.code = response.status;
         error.info = await response.json();
         throw error;
+    }
+    if (response.status === 204) {
+        return;
     }
     return response.json();
 }
