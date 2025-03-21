@@ -7,7 +7,8 @@ import {
   queryClient,
   deleteEvent
 } from "../util/http";
-import { BiArrowBack } from "react-icons/bi";
+import Popup from "./Modal/Popup.jsx"
+import { BiArrowBack} from "react-icons/bi";
 import { NavLink } from "react-router";
 import { useState } from "react";
 import Style from "./css/Event.module.css";
@@ -23,11 +24,13 @@ import { useNavigate } from "react-router";
 export default function Event() {
   let { id } = useParams();
   let navigate = useNavigate();
+  let [openPopup, setOpenPopup] = useState(false);
   let [openModalEdit, setOpenModalEdit] = useState(false);
   let { data } = useQuery({
     queryKey: ["events", id],
     queryFn: ({ signal }) => fetchById({ id, signal }),
   });
+  
   let query = useQuery({
     queryKey: ["images"],
     queryFn: fetchAllImages,
@@ -65,6 +68,9 @@ export default function Event() {
   function handleChangeModal() {
     setOpenModalEdit((prevValue) => !prevValue);
   }
+  function handlePopup(){
+    setOpenPopup(prevValue=>!prevValue)
+  }
   function handleDeleteData(){
     deleteMutation.mutate(id,
       {
@@ -80,7 +86,12 @@ export default function Event() {
          },3000) 
         },
         onError:(error)=>{
-          console.log(error.message)
+          toast.error(error.message,{
+            position:"top-center",
+            autoClose:2000,
+            closeButton:false,
+            icon:<FaCheck style={{"color":"#5D8736" ,"width":"50px","height":"50px"}} />
+          });
         }
       
       }
@@ -135,6 +146,7 @@ export default function Event() {
   return (
     <>
       <main className={Style.main}>
+        {openPopup&&<Popup handleChangeModal={handlePopup} handleAction={handleDeleteData} actionName="delete">Would you to delete?</Popup>}
         {modal}
         {<ToastContainer/>}
         <NavLink to="/events" className={Style.return}>
@@ -163,7 +175,7 @@ export default function Event() {
         <button className={Style.edit} onClick={handleChangeModal}>
           Edit
         </button>
-        <button className={Style.delete} onClick={handleDeleteData}>Delete</button>
+        <button className={Style.delete} onClick={handlePopup}>Delete</button>
       </div>
     </>
   );
