@@ -1,8 +1,8 @@
 import Style from "./css/FormTeste.module.css";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, } from "@tanstack/react-query";
 import { fetchAllImages } from "../util/http";
 
-export default function FormTeste({data,handleSubmit}) {
+export default function FormTeste({data,handleSubmit,title}) {
   let query = useQuery({
     queryKey: ["images"],
     queryFn: fetchAllImages,
@@ -11,7 +11,7 @@ export default function FormTeste({data,handleSubmit}) {
   return (
     <div className={Style.myForm}>
       {" "}
-      <h1>Add a new event.</h1>
+      <h1>{title}</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="title">Title</label>
         <br />
@@ -27,9 +27,10 @@ export default function FormTeste({data,handleSubmit}) {
         <br />
         <label htmlFor="entries">Entries</label>
         <br />
-        <input type="number" defaultValue={data?.title ?? ""}  name="entries" required />
+        <input type="number" defaultValue={data?.entries ?? ""}  name="entries" required />
         <br />
         <label htmlFor="image">Image</label>
+        <br />
         <select name="image">
           {query?.data?.map((el, index) => {
             return (
