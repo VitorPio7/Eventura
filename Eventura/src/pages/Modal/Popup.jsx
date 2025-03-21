@@ -11,6 +11,10 @@ export default function PopUp({typeText, handleChangeModal, handleAction,childre
         modal.close();
       };
     },[])
+    function changeEverything(){
+        handleChangeModal();
+        handleAction();
+    }
 
     return createPortal(
         <dialog className={Style.modal} ref={dialog} onClose={handleChangeModal} >
@@ -18,7 +22,7 @@ export default function PopUp({typeText, handleChangeModal, handleAction,childre
             {children}  
         <div className={Style.buttons}>
          <button className={Style.delete}   onClick={handleAction}  >{actionName}</button>   
-        <button className={Style.cancel}  onClick={handleChangeModal}>Cancel</button> 
+        <button className={Style.cancel}  onClick={changeEverything}>Cancel</button> 
         </div>  
         </dialog>,
         document.getElementsByTagName("body")[0]
