@@ -6,7 +6,10 @@ import { FaCheck, } from "react-icons/fa";
 import { AiFillCloseCircle } from "react-icons/ai";
 import 'react-toastify/dist/ReactToastify.css';
 export default function AddPage() {
-  
+  const today = new Date().toISOString().split("T")[0];
+  const twoYearsLater = new Date();
+  twoYearsLater.setFullYear(twoYearsLater.getFullYear()+2);
+  const maxDate = twoYearsLater.toISOString().split("T")[0];
   let mutate = useMutation({
     mutationFn: createNewEvent,
   });
@@ -85,7 +88,7 @@ export default function AddPage() {
         <br />
         <label htmlFor="date">Date</label>
         <br />
-        <input type="date" name="date" required />
+        <input type="date" name="date" min={today} max={maxDate} required />
         <br />
         <label htmlFor="price">Price</label>
         <br />

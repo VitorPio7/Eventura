@@ -7,6 +7,7 @@ import About from "./pages/About";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient,  } from "./util/http";
 import Event from "./pages/Event";
+import ErrorPage from "./pages/ErrorPage";
 const roter = createBrowserRouter([
   {
     path: "/",
@@ -15,6 +16,7 @@ const roter = createBrowserRouter([
       {
         index: true,
         element: <Home />,
+        errorElement: <ErrorPage />,
       },
       {
         path: "about",
@@ -32,6 +34,10 @@ const roter = createBrowserRouter([
         path: "add",
         element: <AddPage />,
       },
+      {
+        path: "*",
+        element: <ErrorPage />,
+      }
     ],
   },
 ]);

@@ -15,8 +15,6 @@ export default function Events() {
     queryFn: ({ signal }) => fetchEvents({ signal, search }),
     enabled: search !== undefined,
   });
-  console.log("Search term:", search);
-  console.log("Data received:", data?.event);
 
   function onSubmit(event) {
     event.preventDefault();

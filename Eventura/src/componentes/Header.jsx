@@ -1,5 +1,6 @@
 import { NavLink } from "react-router"
 import classes from "./css/Header.module.css"
+import img from "../../public/icon.png"
 export default function Header(){
     return <nav className={classes.allNav}>
         <h1>Eventura</h1>
@@ -16,7 +17,7 @@ export default function Header(){
             <NavLink className={({isActive})=>{
                 return isActive ? classes.active : undefined
             }} to="/events">Events</NavLink>
-            <img src="icon.png" alt="userIcon" />
+            <img src={img} alt="userIcon" />
         </nav>
     </nav>
 }

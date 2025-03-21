@@ -1,5 +1,10 @@
 import Style from "../componentes/css/Form.module.css";
 export default function Form({ handleSubmit, data, imageData }) {
+  const today = new Date().toISOString().split("T")[0];
+  const twoYearsLater = new Date();
+  twoYearsLater.setFullYear(twoYearsLater.getFullYear()+2);
+  const maxDate = twoYearsLater.toISOString().split("T")[0];
+
   return (
     <form className={Style.formDiv} onSubmit={handleSubmit}>
       <label htmlFor="title">Title</label>
@@ -12,7 +17,7 @@ export default function Form({ handleSubmit, data, imageData }) {
         required
       />
       <label htmlFor="date">Date</label>
-      <input type="date" name="date" defaultValue={data?.date ?? ""} required />
+      <input type="date" min={today} max={maxDate} name="date" defaultValue={data?.date ?? ""} required />
       <label htmlFor="time">Time</label>
       <input type="time" name="time" defaultValue={data?.time ?? ""} required />
       <label htmlFor="location">Place</label>

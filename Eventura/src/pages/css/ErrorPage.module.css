@@ -1,0 +1,12 @@
+.errorPage{
+   display: flex;
+   flex-direction: column;
+   height: 100vh;
+   align-items: center;
+}
+.errorPage h1{
+   font-size: 100px;
+}
+.errorPage  p{
+   font-size: 30px;
+}
