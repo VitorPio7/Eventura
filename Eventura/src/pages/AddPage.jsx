@@ -1,8 +1,12 @@
 import Style from "./css/AddPage.module.css";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { createNewEvent, fetchAllImages } from "../util/http";
-
+import { ToastContainer, toast } from 'react-toastify';
+import { FaCheck, } from "react-icons/fa";
+import { AiFillCloseCircle } from "react-icons/ai";
+import 'react-toastify/dist/ReactToastify.css';
 export default function AddPage() {
+  
   let mutate = useMutation({
     mutationFn: createNewEvent,
   });
@@ -19,10 +23,22 @@ export default function AddPage() {
       { event: eventData },
       {
         onSuccess: () => {
-          alert("Event created.");
+          toast.success("Event created!",{
+            position:"top-center",
+            autoClose:3000,
+            closeButton:false,
+            icon:<AiFillCloseCircle style={{"color":"green","width":"50px","height":"50px" }}/>
+          }
+          )
         },
         onError: (error) => {
-          alert(error.message);
+          toast.error(error.message,{
+            closeButton:false,
+            autoClose:3000,
+            position:"top-center",
+            icon:<FaCheck style={{"color":"#5D8736"}}/>
+            
+          })
         },
       }
     );
@@ -30,6 +46,7 @@ export default function AddPage() {
   return (
     <div className={Style.myForm}>
       {" "}
+      <ToastContainer/>
       <h1>Add a new event.</h1>
       <form onSubmit={handleSubmit}>
         <label htmlFor="title">Title</label>
@@ -47,6 +64,8 @@ export default function AddPage() {
         <label htmlFor="entries">Entries</label>
         <br />
         <input type="number" name="entries" required />
+        <br />
+        <label htmlFor="image">Image</label>
         <br />
         <select name="image">
           {query?.data?.map((el, index) => {

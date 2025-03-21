@@ -1,7 +1,7 @@
 import Style from "../css/Modal.module.css";
 import { useEffect, useRef } from "react";
 
-export function Modal({ typeText, handleChangeModal, children }) {
+export default function Modal({ typeText, handleChangeModal, children }) {
   const dialog = useRef();
 
   useEffect(() => {
