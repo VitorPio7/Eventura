@@ -64,3 +64,37 @@
     display: block;
     transition: opacity 0.3s ease-in-out;
   }
+  @media screen and (min-width:1024px){
+    .mainDiv img{
+        width: 350px;
+        height: 350px;
+    }
+    .mainDiv h3{
+        font-size: 25px;
+    }
+    .price{
+        font-size: 25px;
+    }
+    .info{
+        max-width: 500px;
+        display: flex;
+        justify-content: space-between;
+    }
+  }
+  @media (min-width:768px) and (max-width:1023px){
+    .mainDiv img{
+        width: 290px;
+        height: 290px;
+    }
+    .mainDiv h3{
+        font-size: 19px;
+    }
+    .price{
+        font-size: 23px;
+    }
+    .info{
+        max-width: 290px;
+        display: flex;
+        justify-content: space-between;
+    }
+  }

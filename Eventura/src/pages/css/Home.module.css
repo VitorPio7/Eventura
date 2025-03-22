@@ -35,3 +35,36 @@
     border-radius: 5px;
     cursor: pointer;
 }
+@media screen and (min-width:1024px){
+    .divText h1{
+        font-size: 40px;
+        padding: 16px;
+        font-weight: bold;
+    }
+    .divText p{
+        padding: 14px;
+        font-weight: 300;
+        font-size: 18px;
+        text-align: center;
+    }
+    .divText{
+        margin-top: 150px;
+    }
+}
+@media (min-width:768px) and (max-width:1023px){
+    .divText h1{
+        font-size: 40px;
+        padding: 16px;
+        font-weight: bold;
+        text-align: center;
+    }
+    .divText p{
+        padding: 14px;
+        font-weight: 300;
+        font-size: 18px;
+        text-align: center;
+    }
+    .divText{
+        margin-top: 150px;
+    }
+}

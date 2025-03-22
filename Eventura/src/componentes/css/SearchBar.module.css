@@ -26,3 +26,13 @@
     font-weight: bold;
   
 }
+@media screen and (min-width:1024px){
+    .form{
+        width: 700px;
+    }
+}
+@media (min-width:768px) and (max-width:1023px){
+    .form{
+        width: 600px;
+    }
+}
