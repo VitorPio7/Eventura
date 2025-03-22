@@ -144,7 +144,7 @@ export default function Event() {
   }
 
   return (
-    <>
+    <div className={Style.body}>
       <main className={Style.main}>
         {openPopup&&<Popup pending={deleteMutation.isPending} handleChangeModal={handlePopup} handleAction={handleDeleteData} actionName="delete">Would you to delete?</Popup>}
         {modal}
@@ -177,6 +177,6 @@ export default function Event() {
         </button>
         <button className={Style.delete} onClick={handlePopup}>Delete</button>
       </div>
-    </>
+    </div>
   );
 }

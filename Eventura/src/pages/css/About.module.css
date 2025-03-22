@@ -47,3 +47,46 @@
     margin-top: 15px;
     margin-bottom: 100px;
 }
+@media screen and (min-width:1024px){
+    .info{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+    }
+    .info h1{
+        max-width: 1000px;
+        font-size: 40px;
+    }
+    .info p{
+        max-width: 1000px;
+        font-size: 20px;
+    }
+    .playVideo{
+        height: 600px;
+    }
+    .box{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        padding: 16px;
+        width: 600px;
+        height: 200px;
+        background-color:#FFA9A3;
+        border-radius: 5px;
+    }
+    .box h1{
+        font-size: 40px;
+    }
+    .box button{
+        width: 260px;
+        height: 70px;
+        font-size: 20px;
+        color: white;
+        font-weight: 600;
+        background-color: black;
+        margin-top: 35px;
+        cursor: pointer;
+    }
+}
