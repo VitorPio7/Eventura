@@ -1,2 +1,2 @@
 # Eventura
-Eventura is your go-to platform for discovering, planning, and managing unforgettable events. From weddings to corporate gatherings, connect with top venues and vendors, use intuitive planning tools, and get personalized recommendations. Turn every occasion into an extraordinary adventure with Eventura where events meet innovation. 
+Eventura is a simple and practical website for managing your events. You can create, organize, update, and delete events with ease all in one place, making planning faster and more straightforward.
