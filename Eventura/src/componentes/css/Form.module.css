@@ -19,3 +19,8 @@
     background-color: #F87575;
     color: white;
 }
+.formDiv select{
+    height: 40px;
+    border-radius: 8px;
+    border-color:#D5D7DA ;
+}
