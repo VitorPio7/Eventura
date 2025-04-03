@@ -89,4 +89,7 @@
         margin-top: 35px;
         cursor: pointer;
     }
+    .videoMotion{
+        background-color: gray;
+    }
 }

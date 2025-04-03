@@ -32,7 +32,10 @@
     color:#161616;
     font-weight: 700;
 }
-.active{
-    color:#161616;
-    font-weight: 700;
+
+.mynav button{
+    appearance: none;
+    border: none;
+    background: none;
+    cursor: pointer;
 }

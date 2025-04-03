@@ -1,12 +1,15 @@
 import Style from './css/About.module.css';
+import {useScroll, useTransform,motion} from 'framer-motion'
 import {useNavigate} from 'react-router';
 export default function About(){
     let navigate = useNavigate();
+     const {scrollY}= useScroll();
+     const opacityVideo = useTransform(scrollY,[0,200,300],[1,0.7,0.4])
     return <main className={Style.main}>
-        <div>
-            <video className={Style.playVideo} loop muted autoPlay> 
-                <source src="mainVideo.mp4" type="video/mp4" />
-            </video>
+        <div className={Style.videoMotion} style={{backgroundColor:"black"}} >
+            <motion.video style={{opacity:opacityVideo}} className={Style.playVideo} loop muted autoPlay> 
+                <source  src="mainVideo.mp4" type="video/mp4" />
+            </motion.video>
         </div>
         <div className={Style.info}>
             <div>
