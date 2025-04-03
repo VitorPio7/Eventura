@@ -2,6 +2,7 @@ import Style from "./css/Events.module.css";
 import { useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchEvents } from "../util/http";
+
 import CardEvent from "../componentes/CardEvent";
 import SearchBar from "../componentes/SearchBar";
 import SeeAll from "../componentes/SeeAll";

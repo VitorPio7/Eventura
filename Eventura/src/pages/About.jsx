@@ -21,7 +21,7 @@ export default function About(){
             <div className={Style.box}>
                 
                 <h1>Explore, connect, and enjoy, your next adventure starts here!</h1>
-                <button onClick={()=>navigate('/events')}>Explore your events</button>
+                <motion.button whileHover={{scale:1.05, transition:{type:"spring",bounce:0.7}}} onClick={()=>navigate('/events')}>Explore your events</motion.button>
             </div>
         </div>
     </main>
