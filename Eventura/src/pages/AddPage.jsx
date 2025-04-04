@@ -3,6 +3,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { createNewEvent, fetchAllImages } from "../util/http";
 import { ToastContainer, toast } from 'react-toastify';
 import { FaCheck, } from "react-icons/fa";
+import {motion} from "framer-motion"
 import { AiFillCloseCircle } from "react-icons/ai";
 import 'react-toastify/dist/ReactToastify.css';
 export default function AddPage() {
@@ -98,7 +99,7 @@ export default function AddPage() {
         <br />
         <textarea name="description" maxLength="200" required></textarea>
         <br />
-        <button disabled={mutate.isPending}>{mutate.isPending?"...Pending":"Send data"}</button>
+        <motion.button whileHover={{scale:1.02, transition:{type:"spring",bounce:0.7}}} disabled={mutate.isPending}>{mutate.isPending?"...Pending":"Send data"}</motion.button>
       </form>
     </div>
   );

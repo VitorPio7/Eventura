@@ -1,4 +1,5 @@
 import Style from "../componentes/css/Form.module.css";
+import {AnimatePresence, motion} from "framer-motion";
 export default function Form({ handleSubmit, data, imageData }) {
   const today = new Date().toISOString().split("T")[0];
   const twoYearsLater = new Date();
@@ -47,16 +48,17 @@ export default function Form({ handleSubmit, data, imageData }) {
         {imageData?.map((el, index) => {
           return (
             <option
-              key={index}
+             key={index}
               style={{
                 backgroundImage: `url(${"http://localhost:3000/" + el.path})`,
               }}
               value={el.path}
             >
               {el.caption}
-            </option>
+            </option>       
           );
         })}
+       
       </select>
       <label htmlFor="description">Description</label>
       <textarea
@@ -65,7 +67,7 @@ export default function Form({ handleSubmit, data, imageData }) {
         required
         defaultValue={data?.description ?? ""}
       ></textarea>
-      <button>Send</button>
+      <motion.button whileHover={{scale:1.02, transition:{type:"spring",bounce:0.7}}}>Send</motion.button>
     </form>
   );
 }

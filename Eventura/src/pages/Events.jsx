@@ -2,7 +2,7 @@ import Style from "./css/Events.module.css";
 import { useRef, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { fetchEvents } from "../util/http";
-
+import {motion,AnimatePresence} from "framer-motion"
 import CardEvent from "../componentes/CardEvent";
 import SearchBar from "../componentes/SearchBar";
 import SeeAll from "../componentes/SeeAll";
@@ -55,7 +55,7 @@ export default function Events() {
         />
       )}
       {data?.event.length === 0 ? (
-        <p style={{}}>no event found, verify all events bellow.</p>
+        <p>no event found, verify all events bellow.</p>
       ) : null}
       <div className={Style.content}>{content}</div>
     </main>

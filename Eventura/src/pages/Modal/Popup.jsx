@@ -1,7 +1,7 @@
 import Style from "../css/Popup.module.css";
 import {  useEffect, useRef } from "react";
 import {createPortal} from "react-dom";
-
+import {motion} from 'framer-motion';
 export default function PopUp({typeText, handleChangeModal, handleAction,children,actionName,pending}){
     const dialog = useRef();
     useEffect(()=>{
@@ -18,8 +18,8 @@ export default function PopUp({typeText, handleChangeModal, handleAction,childre
             {typeText}   
             {children}  
         <div className={Style.buttons}>
-         <button className={Style.delete} onClick={handleAction} disabled={pending} > {pending?"...pending":actionName}</button>   
-        <button className={Style.cancel} disabled={pending} onClick={handleChangeModal}>Cancel</button> 
+         <motion.button whileHover={{scale:1.02, transition:{type:"spring",bounce:0.7}}} className={Style.delete} onClick={handleAction} disabled={pending} > {pending?"...pending":actionName}</motion.button>   
+        <motion.button whileHover={{scale:1.02, transition:{type:"spring",bounce:0.7}}} className={Style.cancel} disabled={pending} onClick={handleChangeModal}>Cancel</motion.button> 
         </div>  
         </dialog>,
         document.getElementsByTagName("body")[0]

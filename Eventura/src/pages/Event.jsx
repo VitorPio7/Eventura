@@ -7,6 +7,7 @@ import {
   queryClient,
   deleteEvent
 } from "../util/http";
+import {motion,AnimatePresence} from "framer-motion";
 import Popup from "./Modal/Popup.jsx"
 import { BiArrowBack} from "react-icons/bi";
 import { NavLink } from "react-router";
@@ -14,13 +15,12 @@ import { useState } from "react";
 import Style from "./css/Event.module.css";
 import Modal from "./Modal/Modal.jsx";
 import Form from "../componentes/Form";
-import { FaCheck, } from "react-icons/fa";
+import { FaCheck } from "react-icons/fa";
 import { AiFillCloseCircle } from "react-icons/ai";
 import { ToastContainer, toast } from 'react-toastify';
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import "react-lazy-load-image-component/src/effects/blur.css";
 import { useNavigate } from "react-router";
-
 export default function Event() {
   let { id } = useParams();
   let navigate = useNavigate();
@@ -129,25 +129,13 @@ export default function Event() {
       }
     );
   }
-  let modal;
-  if (openModalEdit) {
-    modal = (
-      <Modal handleChangeModal={handleChangeModal} typeText="Edit">
-        <Form
-          handleSubmit={handleEditdata}
-          data={data}
-          imageData={query.data}
-          typeText="Edit"
-        />
-      </Modal>
-    );
-  }
+  
 
   return (
     <div className={Style.body}>
       <main className={Style.main}>
-        {openPopup&&<Popup pending={deleteMutation.isPending} handleChangeModal={handlePopup} handleAction={handleDeleteData} actionName="delete">Would you to delete?</Popup>}
-        {modal}
+       {openPopup&&<Popup pending={deleteMutation.isPending} handleChangeModal={handlePopup} handleAction={handleDeleteData} actionName="delete">Would you to delete?</Popup>}
+       {openModalEdit&&<Modal handleChangeModal={handleChangeModal} typeText="Edit"><Form handleSubmit={handleEditdata} data={data} typeText="Edit" imageData={query.data}/></Modal>}
         {<ToastContainer/>}
         <NavLink to="/events" className={Style.return}>
           <BiArrowBack /> Back to all events
@@ -172,10 +160,10 @@ export default function Event() {
         </div>
       </main>
       <div className={Style.divButton}>
-        <button className={Style.edit} onClick={handleChangeModal}>
+        <motion.button whileHover={{scale:1.05, transition:{type:"spring",bounce:0.7}}} onClick={()=>navigate(`${id}`)} className={Style.edit} onClick={handleChangeModal}>
           Edit
-        </button>
-        <button className={Style.delete} onClick={handlePopup}>Delete</button>
+        </motion.button>
+        <motion.button whileHover={{scale:1.05, transition:{type:"spring",bounce:0.7}}} onClick={()=>navigate(`${id}`)} className={Style.delete} onClick={handlePopup}>Delete</motion.button>
       </div>
     </div>
   );
