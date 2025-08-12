@@ -3,6 +3,7 @@
 Eventura is a full-stack web application built with the MERN stack (MongoDB, Express.js, React, Node.js). It provides a seamless and intuitive platform for users to discover, create, and book events happening around them.
 
 <br>
+
 ![pt1](https://github.com/user-attachments/assets/df0f96d8-a798-45c4-975a-266ec27f0577)
 ![pt7](https://github.com/user-attachments/assets/a42a0022-0a4c-4b0e-b98b-c33483d5f300)
 ![pt6](https://github.com/user-attachments/assets/149ba912-5ed1-40e1-a764-1dd84eb27941)
