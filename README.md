@@ -4,8 +4,7 @@ Eventura is a full-stack web application built with the MERN stack (MongoDB, Exp
 
 <br>
 
-![Eventura Homepage](./eventura-screenshot-1.png)
-_Add a screenshot of your project's homepage here and name it `eventura-screenshot-1.png`._
+
 
 ## ✨ Key Features
 
